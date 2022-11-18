@@ -11,11 +11,11 @@ RUN go mod download
 COPY cmd               ./cmd
 
 RUN ls /app/
-RUN CGO_ENABLED=0 GOOS=linux go build -v -a -o mcf ./cmd/api
+RUN CGO_ENABLED=0 GOOS=linux go build -v -a -o mcfmeta ./cmd/api
 
 FROM scratch
 WORKDIR /app
-COPY --from=builder /app/mcf /app/
+COPY --from=builder /app/mcfmeta /app/
 
 EXPOSE 8000
-ENTRYPOINT ["/app/mcf"]
+ENTRYPOINT ["/app/mcfmeta"]

@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mcf
+  name: mcfmeta
   labels:
-    app: mcf
+    app: mcfmeta
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mcf
+      app: mcfmeta
   template:
     metadata:
       labels:
-        app: mcf
+        app: mcfmeta
     spec:
       containers:
-        - image: phanikumarps/mcf:latest #change it to your image
+        - image: phanikumarps/mcfmeta:latest #change it to your image
           imagePullPolicy: Always
-          name: mcf
+          name: mcfmeta
           ports:
             - name: http
               containerPort: 8000
@@ -25,9 +25,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mcf
+  name: mcfmeta
   labels:
-    app: mcf
+    app: mcfmeta
 spec:
   ports:
     - name: http
@@ -35,4 +35,4 @@ spec:
       targetPort: 8000
       protocol: TCP
   selector:
-    app: mcf
+    app: mcfmeta
