@@ -15,6 +15,7 @@ func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/metadata", metadata).Methods("GET")
+	router.HandleFunc("/$metadata", meta).Methods("GET")
 	router.HandleFunc("/{entity}/{id}", resolver).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
 
@@ -31,6 +32,15 @@ func getBytes(key interface{}) ([]byte, error) {
 }
 func metadata(w http.ResponseWriter, r *http.Request) {
 	resp := umc.Metadata()
+	b, err := getBytes(resp)
+	if err != nil {
+		log.Panic(err)
+	}
+	w.Header().Set("Content-Type", "application/xml")
+	w.Write([]byte(b))
+}
+func meta(w http.ResponseWriter, r *http.Request) {
+	resp := umc.Meta()
 	b, err := getBytes(resp)
 	if err != nil {
 		log.Panic(err)
